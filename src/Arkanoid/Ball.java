@@ -5,10 +5,10 @@ import com.senac.SimpleJava.Graphics.Sprite;
 
 public class Ball extends Sprite {
 	
-	private double dy = -2, dx = -2;
+	private double dy = -1, dx = -1;
 
 	public Ball() {
-		super(5, 5, Color.BLACK);
+		super(4, 4, Color.BLACK);
 	}
 	
 	public void move() {
