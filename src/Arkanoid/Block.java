@@ -1,6 +1,5 @@
 package Arkanoid;
 
-import com.senac.SimpleJava.Console;
 import com.senac.SimpleJava.Graphics.Color;
 import com.senac.SimpleJava.Graphics.Rect;
 import com.senac.SimpleJava.Graphics.Sprite;
