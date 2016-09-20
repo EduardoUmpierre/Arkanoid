@@ -17,7 +17,8 @@ public class Arkanoid extends GraphicApplication {
 	private Sprite background;
 	private Block[][] blocks = new Block[6][13];
 	
-	private int scenarioWidth = Resolution.MSX.width - 100;
+	private final Resolution resolution = Resolution.MODE_X;
+	private final int scenarioWidth = resolution.width - 100;
 	private int score = 0;
 	private int highscore = 10000;
 
@@ -27,7 +28,7 @@ public class Arkanoid extends GraphicApplication {
 		
 		background.draw(canvas);
 		
-		canvas.putText(scenarioWidth + 6, 5, 9, "SCORE: " + score);
+		canvas.putText(scenarioWidth + 6, 5, 10, "SCORE: " + score);
 		canvas.putText(scenarioWidth + 6, 20, 9, "HIGHSCORE: " + highscore);
 		
 		// Blocks		
@@ -46,10 +47,10 @@ public class Arkanoid extends GraphicApplication {
 	@Override
 	protected void setup() {
 		this.setTitle("Arkanoid");
-		this.setResolution(Resolution.MSX);
+		this.setResolution(resolution);
 		this.setFramesPerSecond(60);
 		
-		background = new Sprite(scenarioWidth, Resolution.MSX.height, Color.LIGHTGRAY);		
+		background = new Sprite(scenarioWidth, resolution.height, Color.LIGHTGRAY);		
 		
 		// Ball instance
 		ball = new Ball();
@@ -57,7 +58,7 @@ public class Arkanoid extends GraphicApplication {
 		
 		// Paddle instance
 		paddle = new Paddle();
-		paddle.setPosition(scenarioWidth / 2 - 10, Resolution.MSX.height - 20);
+		paddle.setPosition(scenarioWidth / 2 - 10, resolution.height - 20);
 		
 		// Blocks		
 		for(int y = 0; y < 6; y++) {
@@ -104,7 +105,7 @@ public class Arkanoid extends GraphicApplication {
 		/*
 		 * Mudanca do sentido da bola
 		 */
-		if(ballPosition.y <= 0 || ballPosition.y >= Resolution.MSX.height - 5 || (ballPosition.y + 5 >= paddlePosition.y && ballPosition.x + 5 >= paddlePosition.x && ballPosition.x <= paddlePosition.x + 20)) {
+		if(ballPosition.y <= 0 || ballPosition.y >= resolution.height - 5 || (ballPosition.y + 5 >= paddlePosition.y && ballPosition.x + 5 >= paddlePosition.x && ballPosition.x <= paddlePosition.x + 20)) {
 			ball.yAxis();
 		}
 		
@@ -123,9 +124,9 @@ public class Arkanoid extends GraphicApplication {
 			@Override
 			public void handleEvent() {
 				if(paddlePosition.x <= 0)
-					paddle.move(10, 0);
+					paddle.move(0, 0);
 				else
-					paddle.move(-3, 0);
+					paddle.move(-5, 0);
 			}
 		});
 		
@@ -133,9 +134,9 @@ public class Arkanoid extends GraphicApplication {
 			@Override
 			public void handleEvent() {
 				if(paddlePosition.x + 20 >= scenarioWidth)
-					paddle.move(-10, 0);
+					paddle.move(0, 0);
 				else
-					paddle.move(3, 0);
+					paddle.move(5, 0);
 			}
 		});
 		
@@ -152,6 +153,12 @@ public class Arkanoid extends GraphicApplication {
 				}
 			}
 		}
+		
+		/*
+		 * Atualiza o highscore caso o score passá-lo
+		 */
+		if(score > highscore)
+			highscore = score;
 		
 		redraw();
 	}
