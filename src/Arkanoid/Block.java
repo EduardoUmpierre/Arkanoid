@@ -24,27 +24,28 @@ public class Block extends Sprite {
 		this.isAlive = false;
 	}
 	
-	public boolean wasTouched(Ball ballObject) {		
+	public int wasTouched(Ball ballObject) {		
 		if(this.isAlive == true) {
 			Rect ball = ballObject.getBounds();
 			Rect block = this.getBounds();
 			
 			if(
-				!(ball.y + ball.height <= block.y ||
-				ball.y >= block.y + block.height ||
-				ball.x >= block.x + block.width ||
-				ball.x + ball.width <= block.x)
+				!(ball.y + ball.height < block.y ||
+				ball.y > block.y + block.height ||
+				ball.x > block.x + block.width ||
+				ball.x + ball.width < block.x)
 			) {				
 				this.hits--;
 				
 				if(this.hits == 0)
 					this.die();
 				
-				return true;
+				if(!(ball.y + ball.height <= block.y || ball.y >= block.y + block.height)) return 1;				
+				if(!(ball.x >= block.x + block.width || ball.x + ball.width <= block.x)) return -1;
 			}
 		}
 		
-		return false;
+		return 0;
 	}
 	
 }
